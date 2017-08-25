@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Marker Clustering</title>
+    <title>Project- Storm Fire</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -20,8 +20,7 @@
   </head>
   <body>
     <div id="map"></div>
-	<script src="locations.js"></script>
-    <script>
+	<script>
 
       function initMap() {
 
@@ -48,14 +47,50 @@
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
       }
-	  var x=(Math.random() * (23.700000 - 23.900000) + 23.900000).toFixed(6);	  
-	  var y=90.400000;
-      var locations = JSON.parse('locations.json');
 	  
-	  /*[
+      var locations = [
         
-		{lat: x, lng: y}
-      ]*/
+		{lat: 23.846216, lng: 90.346514},
+		{lat: 23.774519, lng: 90.456456},
+		{lat: 23.945876, lng: 90.378946},
+		{lat: 23.745814, lng: 90.456567},
+		{lat: 23.784579, lng: 90.456456},
+		{lat: 23.987874, lng: 90.345644},
+		{lat: 23.745127, lng: 90.345677},
+		{lat: 23.842159, lng: 90.387456},
+		{lat: 23.745135, lng: 90.347979},
+		{lat: 23.821231, lng: 90.397877},
+		{lat: 23.841123, lng: 90.421477},
+		{lat: 23.746411, lng: 90.416456},
+		{lat: 23.854151, lng: 90.404677},
+		{lat: 23.812413, lng: 90.452134},
+		{lat: 23.941454, lng: 90.434677},
+		{lat: 23.754542, lng: 90.375677}
+      ]
+	  //console.log(locations[0]);
+	  
+	  
+	  var latitude = [];
+	  //var longitude = [];
+	 //console.log(latitude);
+		//doCluster();
+		latArray();
+	  
+	  function latArray(){
+		for(var i=0;i<locations.length;i++){
+			latitude[i]==locations[i].lat;			
+		}
+		var x = latitude[4];
+		console.log(x);
+	  } 
+	  
+	  function doCluster(){
+		var x = locations[15];
+		var y = locations[1];
+		
+		console.log(x);
+	  }
+	  
 	  /*function genarateRandomLatitude(){
 		var latitude = (Math.random() * (23.700000 - 23.900000) + 23.900000).toFixed(6);
 		prompt(latitude,"");
