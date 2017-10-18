@@ -20,7 +20,7 @@
   </head>
   <body>
     <div id="map"></div>
-	<script>
+	<script type="text/javascript">
 
       function initMap() {
 
@@ -30,13 +30,13 @@
         });
 
         // Create an array of alphabetical characters used to label the markers.
-        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var labels = '0123456789';
 
         // Add some markers to the map.
         // Note: The code uses the JavaScript Array.prototype.map() method to
         // create an array of markers based on a given "locations" array.
         // The map() method here has nothing to do with the Google Maps API.
-        var markers = locations.map(function(location, i) {
+        var markers = homeToOffice.map(function(location, i) {
           return new google.maps.Marker({
             position: location,
             label: labels[i % labels.length]
@@ -45,8 +45,18 @@
 
         // Add a marker clusterer to manage the markers.
         var markerCluster = new MarkerClusterer(map, markers,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+            {imagePath: 'https://vignette.wikia.nocookie.net/elderscrolls/images/e/ec/Ok-icon.png/revision/latest?cb=20120124042116'});
+        //var distance = 
+        console.log("HELLO");
       }
+
+
+      //location of my home and office
+      var homeToOffice = [
+      	{lat: 23.795783, lng: 90.369077},
+      	{lat: 23.780703, lng: 90.410450}
+
+      ]
 	  
       var locations = [
         
@@ -67,44 +77,106 @@
 		{lat: 23.941454, lng: 90.434677},
 		{lat: 23.754542, lng: 90.375677}
       ]
+
+      	console.log(homeToOffice[0]);
+      	//TESTING
+
+      	//var origin1 = new google.maps.LatLng(55.930385, -3.118425);
+      	//var origin1 = {lat: -34, lng: 151};
+		//var origin2 = 'Greenwich, England';
+		//var destinationA = 'Stockholm, Sweden';
+		//var destinationB = new google.maps.LatLng(50.087692, 14.421150);
+
+		var service = new google.maps.DistanceMatrixService;
+		service.getDistanceMatrix(
+		  {
+		    origins: [homeToOffice[0]],
+		    destinations: [homeToOffice[1]],
+		    travelMode: 'DRIVING',
+		    transitOptions: TransitOptions,
+		    drivingOptions: DrivingOptions,
+		    unitSystem: google.maps.UnitSystem.METRIC,
+		    avoidHighways: Boolean,
+		    avoidTolls: Boolean,
+		  }, callback);
+
+		function callback(response, status) {
+			if (status == 'OK') {
+		    var origins = response.originAddresses;
+		    var destinations = response.destinationAddresses;
+
+		    for (var i = 0; i < origins.length; i++) {
+		      var results = response.rows[i].elements;
+		      for (var j = 0; j < results.length; j++) {
+		        var element = results[j];
+		        var distance = element.distance.text;
+		        var duration = element.duration.text;
+		        var from = origins[i];
+		        var to = destinations[j];
+		        console.log('distance: '+distance);
+		        console.log('from '+from);
+		        console.log('to '+to);
+
+		      }
+		    }
+  }
+		  // See Parsing the Results for
+		  // the basics of a callback function.
+		}
+
+		//END OF TEST
+
+
 	  //console.log(locations[0]);
 	  
 	  
-	  var latitude = [];
+	  //var latitude = [];
 	  //var longitude = [];
 	 //console.log(latitude);
 		//doCluster();
-		latArray();
-	  
-	  function latArray(){
-		for(var i=0;i<locations.length;i++){
-			latitude[i]==locations[i].lat;			
+		//latArray();
+
+		function loadScript(){
+			var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCH23_8Mvt7mxfieTu1c8yt-kvU60v2AA4&callback=initMap";
+            document.body.appendChild(script);
 		}
-		var x = latitude[4];
-		console.log(x);
-	  } 
 	  
-	  function doCluster(){
-		var x = locations[15];
-		var y = locations[1];
-		
-		console.log(x);
-	  }
-	  
-	  /*function genarateRandomLatitude(){
-		var latitude = (Math.random() * (23.700000 - 23.900000) + 23.900000).toFixed(6);
-		prompt(latitude,"");
-		return latitude;
-	  }
-	  function genarateRandomLongitude(){
-		var longitude = (Math.random() * (90.340000 - 90.450000) + 90.450000).toFixed(6);
-		return longitude;
-	  }*/
+		function latArray(){
+			for(var i=0;i<locations.length;i++){
+				latitude[i]==locations[i].lat;			
+			}
+			var x = latitude[4];
+			console.log(x);
+		  } 
+		  
+		function doCluster(){
+			var x = locations[15];
+			var y = locations[1];
+			
+			console.log(x);
+		  }
+		  
+		function genarateRandomLatitude(){
+			var latitude = (Math.random() * (23.700000 - 23.900000) + 23.900000).toFixed(6);
+			prompt(latitude,"");
+			return latitude;
+		  }
+		function genarateRandomLongitude(){
+			var longitude = (Math.random() * (90.340000 - 90.450000) + 90.450000).toFixed(6);
+			return longitude;
+		  }
     </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCH23_8Mvt7mxfieTu1c8yt-kvU60v2AA4&callback=initMap">
+    </script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    
+    <!--<script
+    	src="https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=23.795783,90.369077&destinations=23.780703,90.410450&key=AIzaSyCH23_8Mvt7mxfieTu1c8yt-kvU60v2AA4"
     </script>
   </body>
 </html>
